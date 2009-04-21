@@ -1,0 +1,30 @@
+<script type="text/javascript" src="js/jquery.js"></script>
+<script type="text/javascript" src="js/jquery-ui.js"></script>
+
+<div id="i1">1</div>
+<div id="i2">2</div>
+<div id="i3">3</div>
+
+<script>
+  var hash = {};
+  
+  var i1 = $('#i1');
+  var i2 = $('#i2');
+  var i3 = $('#i3');
+
+jQuery.prototype.oldToString = jQuery.prototype.toString;
+jQuery.prototype.toString = function() {
+  if (this[0]) return this[0].id; else return this.oldToString();
+}
+
+alert($('#i1').toString());
+
+  hash[i1] = 1;
+  hash[i2] = 2;
+  hash[i3] = 3;
+  
+//  alert(hash[i1]);
+//  alert(hash[i2]);
+//  alert(hash[i3]);
+
+</script>
