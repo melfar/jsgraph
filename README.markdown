@@ -9,8 +9,8 @@ Only the demo.html provided at this point
 
 ## See also
 
-[TouchGraph on Google code search](http://google.com/codesearch?q=touchgraph)
+[TouchGraph](http://google.com/codesearch?q=touchgraph) on Google code search
 
-[SpringGraph — Flex-based implementation](http://mark-shepherd.com/blog/springgraph-flex-component/)
+[SpringGraph](http://mark-shepherd.com/blog/springgraph-flex-component/) — Flex-based implementation
 
-[flare — Flash-based data visualization library](http://flare.prefuse.org/)
+[flare](http://flare.prefuse.org/) — Flash-based data visualization library
