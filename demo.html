@@ -24,13 +24,16 @@ body {
 }
 
 #graph {
+  position: relative;
+  width: 250px;
+  height:250px;
   margin-left: 10px;
   margin-top: 10px;
 }
 </style>
 
 <body>
-  <div id="graph" style="position: relative; height:250px; width:250px;">
+  <div id="graph">
     <div id="node1" class="node">
       <div id="node2" class="node"></div>
       <div id="node3" class="node">
@@ -39,10 +42,11 @@ body {
           <div id="node6" class="node"></div>
         </div>
       </div>
+
       <div id="node7" class="node">
         <div id="node8" class="node"></div>
         <div id="node9" class="node">
-          <div id="node10" class="node"></div>
+          <!-- <div id="node10" class="node"></div>
           <div id="node11" class="node">
             <div id="node12" class="node">
               <div id="node13" class="node"></div>
@@ -54,7 +58,7 @@ body {
                 <div id="node19" class="node"></div>
               </div>
             </div>
-          </div>
+          </div> -->
         </div>
       </div>
     </div>
@@ -113,12 +117,12 @@ body {
         massfade: 0,
         justMadeLocal: false, 
         markedForRemoval: false,
-        repulsion: 10.0
+        repulsion: 20.0
       };
-      if (val.id == 'node1') {
+/*      if (val.id == 'node1') {
         this.list[$(val)].x = parseInt(this.graph.css('width')) / 2;
         this.list[$(val)].y = parseInt(this.graph.css('height')) / 2;
-      }
+      }*/
     },
 
     traverse: function(data, func) {
@@ -167,7 +171,7 @@ body {
       var damper = 1.0, maxMotion = 0.0, lastMaxMotion = 0.0, motionRatio = 0.0, damping = true; 
       var rigidity = 1.0, newRigidity = 1.0;
       var dragNode = null;
-      var defaultLength = 40.0;
+      var defaultLength = 10.0;
       
       var relaxEdges = function() {
         $.each(self.edges, function() {
