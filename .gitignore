@@ -1,0 +1,9 @@
+.DS_Store
+._.DS_Store
+._Rakefile
+.as2_classpath
+.loadpath
+.project
+.settings
+.cache
+error.log
