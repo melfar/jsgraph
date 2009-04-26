@@ -1,6 +1,6 @@
 <script type="text/javascript" src="js/wz_jsgraphics.js"></script>
 <script type="text/javascript" src="js/jquery.js"></script>
-<script type="text/javascript" src="js/jquery-ui.js"></script>
+<script type="text/javascript" src="js/jquery.scrollview.js"></script>
 
 <style>
 body {
@@ -18,52 +18,61 @@ body {
   top: 10px;
   width: 400px;
   height: 90%;
-  xborder: 1px solid #ccc;
   padding: 4px;
   font: 10px helvetica;
 }
 
-#graph {
+#graph-container {
+  background:#EEE;
   position: relative;
-  width: 250px;
-  height:250px;
+  width: 180px;
+  height:180px;
   margin-left: 10px;
   margin-top: 10px;
+  overflow: hidden;
+}
+
+#graph {
+  width: 380px;
+  height: 380px;
+  position: absolute;
 }
 </style>
 
 <body>
-  <div id="graph">
-    <div id="node1" class="node">
-      <div id="node2" class="node"></div>
-      <div id="node3" class="node">
-        <div id="node4" class="node">
-          <div id="node5" class="node"></div>
-          <div id="node6" class="node"></div>
+  <div id="graph-container">
+    <div id="graph">
+      <div id="node1" class="node">
+        <div id="node2" class="node"></div>
+        <div id="node3" class="node">
+          <div id="node4" class="node">
+            <div id="node5" class="node"></div>
+            <div id="node6" class="node"></div>
+          </div>
         </div>
-      </div>
 
-      <div id="node7" class="node">
-        <div id="node8" class="node"></div>
-        <div id="node9" class="node">
-          <!-- <div id="node10" class="node"></div>
-          <div id="node11" class="node">
-            <div id="node12" class="node">
-              <div id="node13" class="node"></div>
-              <div id="node14" class="node"></div>
-              <div id="node15" class="node"></div>
-              <div id="node16" class="node"></div>
-              <div id="node17" class="node">
-                <div id="node18" class="node"></div>
-                <div id="node19" class="node"></div>
+        <div id="node7" class="node">
+          <div id="node8" class="node"></div>
+          <div id="node9" class="node">
+            <!-- <div id="node10" class="node"></div>
+            <div id="node11" class="node">
+              <div id="node12" class="node">
+                <div id="node13" class="node"></div>
+                <div id="node14" class="node"></div>
+                <div id="node15" class="node"></div>
+                <div id="node16" class="node"></div>
+                <div id="node17" class="node">
+                  <div id="node18" class="node"></div>
+                  <div id="node19" class="node"></div>
+                </div>
               </div>
-            </div>
-          </div> -->
+            </div> -->
+          </div>
         </div>
       </div>
     </div>
   </div>
-
+  
   <div id="debug"></div>
 
 </body>
@@ -90,13 +99,20 @@ body {
       this.graph = $('#' + id);
       this.jg = new jsGraphics(id);
       this.traverse(this.graph, this.create_node);
-      $(document).ready(function() {
-        $("img").draggable({drag: function(event, ui) {
-          this.redraw();
-        }});  
-      });
       this.force_direct();
       this.redraw();
+      var self = this;
+      $(function() {
+        self.graph.parent().scrollview();
+        // self.graph.parent().animate({
+        //   scrollLeft: $('#inode1').position().left - parseInt(self.graph.parent().css('width'))/2 + 6,
+        //   scrollTop:  $('#inode1').position().top  - parseInt(self.graph.parent().css('height'))/2 + 6
+        // });
+        self.graph.parent().scrollLeft($('#inode1').position().left -
+                                       parseInt(self.graph.parent().css('width'))/2 + 6)
+                           .scrollTop($('#inode1').position().top -
+                                       parseInt(self.graph.parent().css('height'))/2 + 6);
+      });
     },
     
     create_node: function(val) {
@@ -117,12 +133,8 @@ body {
         massfade: 0,
         justMadeLocal: false, 
         markedForRemoval: false,
-        repulsion: 20.0
+        repulsion: 15
       };
-/*      if (val.id == 'node1') {
-        this.list[$(val)].x = parseInt(this.graph.css('width')) / 2;
-        this.list[$(val)].y = parseInt(this.graph.css('height')) / 2;
-      }*/
     },
 
     traverse: function(data, func) {
