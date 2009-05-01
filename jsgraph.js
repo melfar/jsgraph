@@ -19,6 +19,7 @@ JSGraph.prototype = {
     this.edges = [];
     this.graph = $('#' + id);
     this.jg = new jsGraphics(id);
+    this.graph.hide();
     this.traverse(this.graph, this.create_node);
     this.force_direct();
     this.redraw();
@@ -26,15 +27,16 @@ JSGraph.prototype = {
     $(function() {
       var container = self.graph.parent();
       container.scrollview();
+      self.graph.show();
       var firstNode = self.nodes[$(self.graph.children('div.node').get(0))];
       if (firstNode) {
-        container.scrollLeft(firstNode.node.position().left - container.width()/2  + firstNode.halfsize[0])
-                 .scrollTop(firstNode.node.position().top   - container.height()/2 + firstNode.halfsize[1]);
+        self.center_on(firstNode);
       }
     });
   },
   
   create_node: function(val) {
+    var self = this;
     var img = $(document.createElement("img"));
     img.attr('id',       'i' + val.id)
        .attr('src',      val.id == 'node1' ? 'images/node-red.png' : 'images/node-green.png');
@@ -249,5 +251,11 @@ JSGraph.prototype = {
       //self.redraw();
     }
     while(maxMotion > 0.01);
+  },
+  
+  center_on: function(node) {
+    var container = this.graph.parent();
+    container.scrollLeft(node.node.position().left - container.width()/2  + node.halfsize[0])
+             .scrollTop(node.node.position().top   - container.height()/2 + node.halfsize[1]);
   }
 }
