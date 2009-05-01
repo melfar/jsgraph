@@ -57,8 +57,8 @@
                 var self = this;
                 this.i.mousedown(function(e){
                         self.startgrab();
-                        this.xp = e.pageX;
-                        this.yp = e.pageY;
+                        this.xp = this.startxp = e.pageX;
+                        this.yp = this.startyp = e.pageY;
                         return false;
                 }).mousemove(function(e){
                         if (!self.isgrabbing) return true;
@@ -68,8 +68,15 @@
                         return false;
                 })
                 .mouseout(function(){ self.stopgrab() })
-                .mouseup(function(){ self.stopgrab() })
-                .dblclick(function(){
+                .mouseup(function(e){ 
+                  self.stopgrab();
+                  if (this.startxp != e.pageX || this.startyp != e.pageY)  this.stopclick = true; 
+                })
+                .click(function(){  // react to single click  --melfar
+                        if (this.stopclick) {
+                          this.stopclick = false;
+                          return true;
+                        }
                         var _m = self.m;
                         var off = _m.offset();
                         var dx = this.xp - off.left - _m.width() / 2;
