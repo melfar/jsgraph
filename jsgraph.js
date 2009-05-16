@@ -1,5 +1,4 @@
 // More info on http://github.com/melfar/jsgraph/
-
 // utils
 jQuery.prototype.oldToString = jQuery.prototype.toString;
 jQuery.prototype.toString = function() {  // generate string keys for hashes
@@ -21,7 +20,7 @@ JSGraph.prototype = {
     this.jg = new jsGraphics(id);
     this.graph.hide();
     this.traverse(this.graph, this.create_node);
-    this.force_direct();
+    //this.force_direct();
     this.redraw();
     var self = this;
     $(function() {
@@ -35,17 +34,18 @@ JSGraph.prototype = {
     });
   },
   
-  create_node: function(val) {
+  create_node: function(node) {
     var self = this;
     var img = $(document.createElement("img"));
-    img.attr('id',       'i' + val.id)
-       .attr('src',      val.id == 'node1' ? 'images/node-red.png' : 'images/node-green.png');
+    img.attr('id',       'i' + node.id)
+       .attr('src',      node.id == 'node1' ? 'images/node-red.png' : 'images/node-green.png');
     img.css('position',  'absolute')
        .css('zIndex',    1);
     this.graph.append(img);
-    this.nodes[$(val)] = {
-      x: this.graph.width()/2,
-      y: this.graph.height()/2,
+    node = $(node);
+    this.nodes[node] = {
+      x: parseInt(node.attr('x')) || this.graph.width()/2,
+      y: parseInt(node.attr('y')) || this.graph.height()/2,
       node:     img,
       halfsize: [6, 6],
       dx: 0,
@@ -250,7 +250,7 @@ JSGraph.prototype = {
       rigidity= newRigidity;
       //self.redraw();
     }
-    while(maxMotion > 0.01);
+    while(maxMotion > 0.1);
   },
   
   center_on: function(node) {
