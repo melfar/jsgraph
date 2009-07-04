@@ -35,6 +35,13 @@
   position: absolute;
   z-index: 2;
 }
+
+#sidebar {
+  position: absolute;
+  top: 10px;
+  left: 220px;
+  font: 12px helvetica;
+}
 </style>
 
 <body>
@@ -70,8 +77,13 @@
         </div>
 
       </div>
-
+    
     </div>
+  </div>
+  
+  <div id="sidebar">
+    <div id="selected"></div><br />
+    <input type="button" onclick="alert('test'); return false" value="Add node" />
   </div>
   
   <div id="debug"></div>

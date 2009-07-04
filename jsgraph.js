@@ -20,6 +20,7 @@ JSGraph.prototype = {
     this.jg = new jsGraphics(id);
     this.graph.hide();
     this.traverse(this.graph, this.create_node);
+    this.traverse(this.graph, this.find_edges);
     //this.force_direct();
     this.redraw();
     var self = this;
@@ -41,6 +42,9 @@ JSGraph.prototype = {
        .attr('src',      node.id == 'node1' ? 'images/node-red.png' : 'images/node-green.png');
     img.css('position',  'absolute')
        .css('zIndex',    1);
+    img.click(function() {
+      $('#selected').html("<b>Selected:</b> " + this.id);
+    });
     this.graph.append(img);
     node = $(node);
     this.nodes[node] = {
@@ -96,7 +100,6 @@ JSGraph.prototype = {
 
   force_direct: function() {        
     var self = this;
-    this.traverse(this.graph, this.find_edges);
     
     // Algorithm borrowed from TouchGraph by Alexander Shapiro
     var damper = 1.0, maxMotion = 0.0, lastMaxMotion = 0.0, motionRatio = 0.0, damping = true; 
@@ -257,5 +260,9 @@ JSGraph.prototype = {
     var container = this.graph.parent();
     container.scrollLeft(node.node.position().left - container.width()/2  + node.halfsize[0])
              .scrollTop(node.node.position().top   - container.height()/2 + node.halfsize[1]);
+  },
+  
+  add_node: function(node) {
+    create_node(node);
   }
 }
